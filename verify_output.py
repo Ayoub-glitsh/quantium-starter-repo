@@ -1,77 +1,77 @@
 #!/usr/bin/env python3
 """
-Script de vérification du fichier de sortie formatted_data.csv
+Verification script for formatted_data.csv output file
 """
 
 import pandas as pd
 import os
 
 def verify_output_file(file_path='data/formatted_data.csv'):
-    """Vérifie que le fichier de sortie respecte toutes les consignes"""
+    """Verify that output file meets all requirements"""
     
-    print('VERIFICATION DU FICHIER FINAL')
+    print('FINAL FILE VERIFICATION')
     print('=' * 40)
     
-    # Vérifier l'existence du fichier
+    # Check file existence
     if not os.path.exists(file_path):
-        print(f"ERREUR: Fichier {file_path} introuvable!")
+        print(f"ERROR: File {file_path} not found!")
         return False
     
-    # Charger le fichier
+    # Load file
     df = pd.read_csv(file_path)
     
-    # Vérifications
-    print(f'Nombre de lignes: {len(df)}')
-    print(f'Colonnes: {list(df.columns)}')
+    # Verifications
+    print(f'Number of rows: {len(df)}')
+    print(f'Columns: {list(df.columns)}')
     
-    # Vérifier les colonnes exactes
+    # Check exact columns
     expected_columns = ['sales', 'date', 'region']
     if list(df.columns) != expected_columns:
-        print(f"ERREUR: Colonnes incorrectes!")
-        print(f"   Attendu: {expected_columns}")
-        print(f"   Trouvé: {list(df.columns)}")
+        print(f"ERROR: Incorrect columns!")
+        print(f"   Expected: {expected_columns}")
+        print(f"   Found: {list(df.columns)}")
         return False
     else:
-        print("Colonnes correctes")
+        print("Columns correct")
     
-    # Vérifier les types de données
-    print(f'Ventes totales: ${df["sales"].sum():,.2f}')
-    print(f'Période: {df["date"].min()} à {df["date"].max()}')
-    print(f'Régions: {sorted(df["region"].unique())}')
+    # Check data types
+    print(f'Total sales: ${df["sales"].sum():,.2f}')
+    print(f'Period: {df["date"].min()} to {df["date"].max()}')
+    print(f'Regions: {sorted(df["region"].unique())}')
     
-    # Vérifications supplémentaires
-    print('\nTESTS DE VALIDATION:')
+    # Additional verifications
+    print('\nVALIDATION TESTS:')
     
-    # Test 1: Pas de valeurs manquantes
+    # Test 1: No missing values
     missing_values = df.isnull().sum().sum()
-    status1 = "OK" if missing_values == 0 else "ERREUR"
-    print(f'   • Valeurs manquantes: {missing_values} [{status1}]')
+    status1 = "OK" if missing_values == 0 else "ERROR"
+    print(f'   • Missing values: {missing_values} [{status1}]')
     
-    # Test 2: Sales sont des nombres positifs
+    # Test 2: Sales are positive numbers
     negative_sales = (df['sales'] <= 0).sum()
-    status2 = "OK" if negative_sales == 0 else "ERREUR"
-    print(f'   • Ventes négatives/nulles: {negative_sales} [{status2}]')
+    status2 = "OK" if negative_sales == 0 else "ERROR"
+    print(f'   • Negative/zero sales: {negative_sales} [{status2}]')
     
-    # Test 3: 4 régions exactement
+    # Test 3: Exactly 4 regions
     regions_count = len(df['region'].unique())
-    status3 = "OK" if regions_count == 4 else "ERREUR"
-    print(f'   • Nombre de régions: {regions_count} [{status3}]')
+    status3 = "OK" if regions_count == 4 else "ERROR"
+    print(f'   • Number of regions: {regions_count} [{status3}]')
     
-    # Test 4: Format des dates
+    # Test 4: Date format
     try:
         pd.to_datetime(df['date'])
-        print(f'   • Format des dates: Valid [OK]')
+        print(f'   • Date format: Valid [OK]')
     except:
-        print(f'   • Format des dates: Invalid [ERREUR]')
+        print(f'   • Date format: Invalid [ERROR]')
     
-    # Résumé statistique
-    print(f'\nSTATISTIQUES:')
-    print(f'   • Ventes min: ${df["sales"].min():,.2f}')
-    print(f'   • Ventes max: ${df["sales"].max():,.2f}')
-    print(f'   • Ventes moyennes: ${df["sales"].mean():,.2f}')
-    print(f'   • Taille du fichier: {os.path.getsize(file_path):,} bytes')
+    # Statistical summary
+    print(f'\nSTATISTICS:')
+    print(f'   • Min sales: ${df["sales"].min():,.2f}')
+    print(f'   • Max sales: ${df["sales"].max():,.2f}')
+    print(f'   • Average sales: ${df["sales"].mean():,.2f}')
+    print(f'   • File size: {os.path.getsize(file_path):,} bytes')
     
-    print('\nVALIDATION TERMINEE!')
+    print('\nVALIDATION COMPLETED!')
     return True
 
 if __name__ == '__main__':
