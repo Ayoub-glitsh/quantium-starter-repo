@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # Dash specific
-assets/
+# assets/  # Commented out - we need assets for CSS
 *.dash
 .dash/
 
