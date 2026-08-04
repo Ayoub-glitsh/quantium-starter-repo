@@ -47,7 +47,7 @@ def load_and_merge_csv_files(data_dir='data'):
     if not csv_files:
         raise FileNotFoundError(f"Aucun fichier trouvé avec le pattern: {csv_pattern}")
     
-    print(f"📁 Fichiers trouvés : {len(csv_files)}")
+    print(f"Fichiers trouvés : {len(csv_files)}")
     for file in sorted(csv_files):
         print(f"   - {file}")
     
@@ -55,12 +55,12 @@ def load_and_merge_csv_files(data_dir='data'):
     dataframes = []
     for file in sorted(csv_files):
         df = pd.read_csv(file)
-        print(f"   ✅ {os.path.basename(file)}: {len(df)} lignes")
+        print(f"   {os.path.basename(file)}: {len(df)} lignes")
         dataframes.append(df)
     
     # Fusionner tous les DataFrames
     merged_df = pd.concat(dataframes, ignore_index=True)
-    print(f"🔗 Fusion terminée : {len(merged_df)} lignes totales")
+    print(f"Fusion terminée : {len(merged_df)} lignes totales")
     
     return merged_df
 
@@ -77,22 +77,22 @@ def process_sales_data(df):
     Returns:
         pandas.DataFrame: DataFrame traité
     """
-    print("\n🔄 Traitement des données...")
+    print("\nTraitement des données...")
     
     # Étape 1: Afficher la structure initiale
-    print(f"📊 Données initiales : {len(df)} lignes, {len(df.columns)} colonnes")
+    print(f"Données initiales : {len(df)} lignes, {len(df.columns)} colonnes")
     print(f"   Colonnes : {list(df.columns)}")
     print(f"   Produits uniques : {df['product'].unique().tolist()}")
     
     # Étape 2: Filtrer par produit "pink morsel" (insensible à la casse)
     df_filtered = df[df['product'].str.lower() == 'pink morsel'].copy()
-    print(f"🎯 Après filtrage 'pink morsel' : {len(df_filtered)} lignes")
+    print(f"Après filtrage 'pink morsel' : {len(df_filtered)} lignes")
     
     if len(df_filtered) == 0:
         raise ValueError("Aucune donnée trouvée pour le produit 'pink morsel'")
     
     # Étape 3: Nettoyer les prix et calculer les ventes
-    print("💰 Nettoyage des prix et calcul des ventes...")
+    print("Nettoyage des prix et calcul des ventes...")
     
     # Nettoyer la colonne price (supprimer $ et convertir en float)
     df_filtered['price_clean'] = df_filtered['price'].apply(clean_price)
@@ -108,8 +108,8 @@ def process_sales_data(df):
     final_columns = ['sales', 'date', 'region']
     df_final = df_filtered[final_columns].copy()
     
-    print(f"📋 Colonnes finales sélectionnées : {final_columns}")
-    print(f"✅ Données finales : {len(df_final)} lignes, {len(df_final.columns)} colonnes")
+    print(f"Colonnes finales sélectionnées : {final_columns}")
+    print(f"Données finales : {len(df_final)} lignes, {len(df_final.columns)} colonnes")
     
     return df_final
 
@@ -121,7 +121,7 @@ def save_processed_data(df, output_file='data/formatted_data.csv'):
         df: DataFrame traité
         output_file: Chemin de sortie
     """
-    print(f"\n💾 Sauvegarde vers : {output_file}")
+    print(f"\nSauvegarde vers : {output_file}")
     
     # Créer le répertoire si nécessaire
     output_path = Path(output_file)
@@ -132,9 +132,9 @@ def save_processed_data(df, output_file='data/formatted_data.csv'):
     
     # Vérification
     file_size = os.path.getsize(output_file)
-    print(f"✅ Fichier sauvegardé : {output_file}")
-    print(f"📏 Taille du fichier : {file_size} bytes")
-    print(f"📊 Lignes exportées : {len(df)}")
+    print(f"Fichier sauvegardé : {output_file}")
+    print(f"Taille du fichier : {file_size} bytes")
+    print(f"Lignes exportées : {len(df)}")
 
 def display_summary(df):
     """
@@ -143,7 +143,7 @@ def display_summary(df):
     Args:
         df: DataFrame final
     """
-    print("\n📈 RÉSUMÉ DES DONNÉES TRAITÉES")
+    print("\nRESUME DES DONNEES TRAITEES")
     print("=" * 50)
     print(f"Nombre total de lignes : {len(df)}")
     print(f"Colonnes : {list(df.columns)}")
@@ -153,10 +153,10 @@ def display_summary(df):
     print(f"Ventes moyennes par ligne : ${df['sales'].mean():.2f}")
     print(f"Ventes min/max : ${df['sales'].min():.2f} / ${df['sales'].max():.2f}")
     
-    print("\n📊 Aperçu des premières lignes :")
+    print("\nAperçu des premières lignes :")
     print(df.head())
     
-    print("\n🌍 Ventes par région :")
+    print("\nVentes par région :")
     sales_by_region = df.groupby('region')['sales'].sum().sort_values(ascending=False)
     for region, sales in sales_by_region.items():
         print(f"   {region.capitalize()}: ${sales:,.2f}")
@@ -165,7 +165,7 @@ def main():
     """
     Fonction principale du script de traitement des données
     """
-    print("🚀 QUANTIUM DATA PROCESSING - TASK 2")
+    print("QUANTIUM DATA PROCESSING - TASK 2")
     print("=" * 50)
     print("Client: Soul Foods")
     print("Produit: Pink Morsel Sales Data")
@@ -184,12 +184,12 @@ def main():
         # Étape 4: Afficher le résumé
         display_summary(df_processed)
         
-        print("\n🎉 TRAITEMENT TERMINÉ AVEC SUCCÈS!")
-        print("📁 Fichier de sortie : data/formatted_data.csv")
+        print("\nTRAITEMENT TERMINE AVEC SUCCES!")
+        print("Fichier de sortie : data/formatted_data.csv")
         
     except Exception as e:
-        print(f"\n❌ ERREUR : {str(e)}")
-        print("🔧 Vérifiez que les fichiers CSV sont présents dans le dossier 'data/'")
+        print(f"\nERREUR : {str(e)}")
+        print("Vérifiez que les fichiers CSV sont présents dans le dossier 'data/'")
         raise
 
 if __name__ == "__main__":

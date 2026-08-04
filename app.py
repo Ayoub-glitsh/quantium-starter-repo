@@ -37,7 +37,7 @@ def update_content(_):
     try:
         # Tenter de charger les données
         df = pd.read_csv('data/daily_sales_data_0.csv')
-        status = f"✅ Données chargées avec succès ! {len(df)} lignes trouvées."
+        status = f"Données chargées avec succès ! {len(df)} lignes trouvées."
         
         # Créer un graphique simple si possible
         if not df.empty:
@@ -50,14 +50,14 @@ def update_content(_):
             fig = px.scatter(title="Pas de données à afficher")
             
     except Exception as e:
-        status = f"❌ Erreur lors du chargement des données: {str(e)}"
+        status = f"Erreur lors du chargement des données: {str(e)}"
         fig = px.scatter(title="Erreur de chargement des données")
     
     return status, fig
 
 # Lancer l'application
 if __name__ == '__main__':
-    print("🚀 Lancement du serveur Dash...")
-    print("📊 Dashboard accessible sur: http://127.0.0.1:8050")
-    print("⏹️  Pour arrêter: Ctrl+C")
+    print("Lancement du serveur Dash...")
+    print("Dashboard accessible sur: http://127.0.0.1:8050")
+    print("Pour arrêter: Ctrl+C")
     app.run_server(debug=True, host='127.0.0.1', port=8050)
