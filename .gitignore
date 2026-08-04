@@ -1,6 +1,3 @@
-# Jetbrains
-.idea/
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -130,3 +127,23 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Dash specific
+assets/
+*.dash
+.dash/
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
