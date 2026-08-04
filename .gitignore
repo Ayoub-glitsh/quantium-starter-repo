@@ -147,3 +147,7 @@ assets/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Markdown files (except README.md)
+*.md
+!README.md
