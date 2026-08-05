@@ -27,7 +27,7 @@ df = load_data()
 app.layout = html.Div([
     # Header Section
     html.Div([
-        html.H1("Soul Foods Sales Analytics", className="header-title"),
+        html.H1("Soul Foods Sales Analytics", id="header", className="header-title"),
         html.P("Interactive dashboard for Pink Morsel sales analysis", className="header-subtitle")
     ], className="header-container"),
     
@@ -37,7 +37,7 @@ app.layout = html.Div([
         html.Div([
             html.H3("Filter by Region", className="control-title"),
             dcc.RadioItems(
-                id='region-filter',
+                id='region-selector',
                 options=[
                     {'label': 'All Regions', 'value': 'All'},
                     {'label': 'North', 'value': 'north'},
@@ -55,7 +55,7 @@ app.layout = html.Div([
         html.Div([
             html.H3("Sales Trends Over Time", className="chart-title"),
             dcc.Graph(
-                id='sales-chart',
+                id='sales-line-chart',
                 config={'displayModeBar': True, 'displaylogo': False}
             )
         ], className="chart-card"),
@@ -75,9 +75,9 @@ app.layout = html.Div([
 
 # Callback for updating chart based on region selection
 @app.callback(
-    [Output('sales-chart', 'figure'),
+    [Output('sales-line-chart', 'figure'),
      Output('stats-cards', 'children')],
-    [Input('region-filter', 'value')]
+    [Input('region-selector', 'value')]
 )
 def update_dashboard(selected_region):
     """Update chart and statistics based on selected region"""
